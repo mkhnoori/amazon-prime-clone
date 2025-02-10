@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: amazon-prime-clone
+  labels:
+    app: prime-clone
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prime-clone
+  template:
+    metadata:
+      labels:
+        app: prime-clone
+    spec:
+      containers:
+        - name: prime-clone
+          image: mkhnoori1/prime:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: VITE_APP_TMDB_V3_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: tmdb-secret
+                  key: tmdb-api-key
