@@ -1,16 +1,26 @@
 # Stage 1: Build the React app
-FROM node:16-alpine as builder
+FROM node:16-alpine AS builder
+
 WORKDIR /app
+
+# Copy dependency files and install dependencies
 COPY package.json package-lock.json ./
 RUN npm install
+
+# Copy the rest of the application files
 COPY . .
-ARG TMDB_V3_API_KEY
-ENV VITE_APP_TMDB_V3_API_KEY=$TMDB_V3_API_KEY
+
+# Build the app (make sure `build` script exists in package.json)
 RUN npm run build
 
-# Stage 2: Serve with Nginx
+# Stage 2: Serve the built app with nginx
 FROM nginx:stable-alpine
-WORKDIR /usr/share/nginx/html
-COPY --from=builder /app/dist .
+
+# Copy built files from builder stage
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Expose port 80
 EXPOSE 80
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+CMD ["nginx", "-g", "daemon off;"]
+
