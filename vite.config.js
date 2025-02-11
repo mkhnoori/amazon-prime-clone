@@ -1,11 +1,12 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
+  base: './', // Ensures relative paths for assets
   build: {
     outDir: 'dist',
-    assetsDir: 'assets',  // Ensures that assets are placed in the 'assets' folder in 'dist'
+    assetsDir: 'assets', // Ensures assets are placed in 'dist/assets'
     rollupOptions: {
-      input: './src/index.html', // Specify the entry point
+      input: 'src/index.html', // Corrected entry point
     },
   },
 });
