@@ -25,3 +25,10 @@ spec:
                 secretKeyRef:
                   name: tmdb-secret
                   key: tmdb-api-key
+          resources:
+            requests:
+              memory: "256Mi"  # Minimum amount of memory to allocate
+              cpu: "250m"      # Minimum CPU allocation
+            limits:
+              memory: "512Mi"  # Maximum memory the pod can use
+              cpu: "500m"      # Maximum CPU the pod can use
