@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: prime-clone
-          image: mkhnoori1/prime:latest
+          image: mkhnoori1/amzprime
           ports:
             - containerPort: 80
           env:
