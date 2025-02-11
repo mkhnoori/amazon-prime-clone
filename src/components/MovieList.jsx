@@ -1,28 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import { fetchMovies } from '../api';
+import axios from 'axios';
 
 const MovieList = ({ category }) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    const getMovies = async () => {
-      const movieData = await fetchMovies(category);
-      setMovies(movieData);
+    const fetchMovies = async () => {
+      const response = await axios.get(
+        `https://api.themoviedb.org/3/movie/${category}?api_key=${process.env.VITE_APP_TMDB_V3_API_KEY}`
+      );
+      setMovies(response.data.results);
     };
-    getMovies();
+
+    fetchMovies();
   }, [category]);
 
   return (
-    <div className="movie-list">
-      {movies.map((movie) => (
-        <div key={movie.id} className="movie-card">
-          <img
-            src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-            alt={movie.title}
-          />
-          <h3>{movie.title}</h3>
-        </div>
-      ))}
+    <div>
+      <h2>{category}</h2>
+      <ul>
+        {movies.map((movie) => (
+          <li key={movie.id}>
+            <h3>{movie.title}</h3>
+            <p>{movie.overview}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
