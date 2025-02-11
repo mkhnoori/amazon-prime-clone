@@ -1,11 +1,11 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: './src', // Set the root to the src directory
   build: {
-    outDir: '../dist', // Output will be generated in dist
+    outDir: 'dist',
+    assetsDir: 'assets',  // Ensures that assets are placed in the 'assets' folder in 'dist'
     rollupOptions: {
-      input: 'src/index.html', // Entry point in src/index.html
+      input: './src/index.html', // Specify the entry point
     },
   },
 });
