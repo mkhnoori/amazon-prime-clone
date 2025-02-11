@@ -1,31 +1,37 @@
+// src/components/MovieList.jsx
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetchMovies } from '../api';  // Assuming your api.js file is in the src folder
 
-const MovieList = ({ category }) => {
+const MovieList = () => {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${category}?api_key=${process.env.VITE_APP_TMDB_V3_API_KEY}`
-      );
-      setMovies(response.data.results);
+    const getMovies = async () => {
+      // Fetching the 'popular' category or any other movie list from TMDB
+      const data = await fetchMovies('popular');
+      setMovies(data);
+      setLoading(false);
     };
 
-    fetchMovies();
-  }, [category]);
+    getMovies();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
-      <h2>{category}</h2>
-      <ul>
+      <h2>All Movies</h2>
+      <div className="movie-list">
         {movies.map((movie) => (
-          <li key={movie.id}>
+          <div key={movie.id} className="movie">
             <h3>{movie.title}</h3>
             <p>{movie.overview}</p>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
