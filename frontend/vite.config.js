@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  root: './', // set the root to the project's root
+  root: './frontend', // set the root to the 'frontend' folder
   build: {
-    outDir: 'dist', // you can specify the output directory here
+    outDir: 'dist', // output directory
     rollupOptions: {
       input: './index.html', // explicitly set the path to your index.html
     },
